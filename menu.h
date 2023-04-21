@@ -4,9 +4,6 @@
 
 #ifndef CLOTHES_SHOP_MENU_H
 #define CLOTHES_SHOP_MENU_H
-// ca employee ai voie sa bagi produse, sa scoti produse, sa editezi produse, sa creezi produse
-
-// ca customer ai voie sa bagi produse in cosul de cumparaturi (pana dai back), sa le vezi (se deschide imagine cu ele)
 
 #include "shop/product.h"
 #include "shop/shirt.h"
@@ -17,6 +14,7 @@
 #include "persons/customer.h"
 #include "persons/employee.h"
 #include <algorithm>
+
 
 class Menu{
     std::vector<Product*> productsList;

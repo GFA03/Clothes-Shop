@@ -6,18 +6,20 @@
 #define CLOTHES_SHOP_CUSTOMER_H
 
 #include "person.h"
+#include "../shop/product.h"
 #include <iostream>
 #include <string>
 #include <vector>
+
 
 class Customer: public Person{
     const int customerId;
     static int customerCount;
 
     int discountPoints;
-    std::vector<std::string> purchaseHistory;
+    std::vector<Product*> purchaseHistory;
 public:
-    Customer(std::string name = "Unknown", int age = 0, int discountPoints = 0, std::vector<std::string> purchaseHistory = {});
+    Customer(std::string name = "Unknown", int age = 0, int discountPoints = 0, std::vector<Product*> purchaseHistory = {});
     Customer(const Customer& other);
     Customer& operator=(const Customer& other);
     void read(std::istream& in);
@@ -29,6 +31,7 @@ public:
     int getCustomerId() const;
 
     void setDiscountPoints(int discountPoints);
+    void addProduct(Product* product);
 };
 
 inline int Customer::customerCount = 100;

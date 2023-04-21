@@ -4,14 +4,14 @@
 
 #include "customer.h"
 
-Customer::Customer(std::string name, int age, int discountPoints, std::vector<std::string> purchaseHistory):customerId(customerCount++), Person(name, age){
+Customer::Customer(std::string name, int age, int discountPoints, std::vector<Product*> purchaseHistory):customerId(customerCount++), Person(name, age){
     this->discountPoints = discountPoints;
-    this-> purchaseHistory = purchaseHistory;
+    this->purchaseHistory = purchaseHistory;
 }
 
 Customer::Customer(const Customer& other):customerId(customerCount++), Person(other){
     this->discountPoints = other.discountPoints;
-    this-> purchaseHistory = other.purchaseHistory;
+    this->purchaseHistory = other.purchaseHistory;
 }
 
 Customer& Customer::operator=(const Customer& other){
@@ -36,8 +36,8 @@ void Customer::print(std::ostream& out) const{
     if(!this->purchaseHistory.empty())
     {
         out << "Purchase history:";
-        for(const auto & i : this->purchaseHistory)
-            out << " " << i;
+        for(const auto& i : this->purchaseHistory)
+            out << '\n' << *i << '\n';
         out << std::endl;
     }
 }
@@ -61,3 +61,7 @@ Customer::~Customer(){
 int Customer::getCustomerId() const {return this->customerId;}
 
 void Customer::setDiscountPoints(int discountPoints) {this->discountPoints = discountPoints;}
+
+void Customer::addProduct(Product* product) {
+    this->purchaseHistory.push_back(product);
+}

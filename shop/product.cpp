@@ -92,3 +92,7 @@ Product::~Product(){}
 std::string Product::getBarCode() const {
     return this->barCode;
 }
+
+float Product::getPrice() const{
+    return this->price;
+}

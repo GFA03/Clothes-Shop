@@ -41,6 +41,7 @@ public:
     virtual ~Product();
 
     std::string getBarCode() const;
+    float getPrice() const;
 };
 
 inline int Product::productCount = 10;

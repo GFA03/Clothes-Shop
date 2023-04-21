@@ -13,8 +13,8 @@ void Menu::loadData(){
     a = new Employee("John Bengosu", 20, "Asistent");
     b = new Employee("Mircea Batranu", 21, "Asistent Sef");
     c = new Employee("Laurentiu Cosmin", 30, "Manager");
-    d = new Customer("Mihai Bivol", 20, 200);
-    e = new Customer("Razvan Dascal", 26, 12);
+    d = new Customer("Mihai Bivol", 20, 200, {});
+    e = new Customer("Razvan Dascal", 26, 12, {});
     this->personsList.push_back(a);
     this->personsList.push_back(b);
     this->personsList.push_back(c);
@@ -90,7 +90,21 @@ void Menu::run(){
             }
             case 3:{
                 system("clear");
-//                this->customerMenu(id);
+                bool found = false;
+                Customer* temp;
+                for(int i = 0; i < this->personsList.size(); ++i){
+                    temp = dynamic_cast<Customer*>(this->personsList[i]);
+                    if(temp != nullptr){
+                        std::cout << temp->getName() << '(' << temp->getCustomerId() << ')' << " -> " << i << '\n';
+                        found = true;
+                    }
+                }
+                if(found) {
+                    int id;
+                    std::cout << "Id: ";
+                    std::cin >> id;
+                    this->customerMenu(id);
+                }else{std::cout << "No employees found!\n";}
                 break;
             }
             default:{
@@ -153,7 +167,7 @@ void Menu::adminMenu() {
                 std::cin >> id;
                 if(id >= 0 && id < this->personsList.size() && dynamic_cast<Employee*>(this->personsList[id]) != nullptr)
                     this->editEmployeeMenu(id);
-                else{std::cout << "Invalid id";}
+                else{std::cout << "Invalid id\n";}
                 break;
             }
             case 4:{
@@ -414,6 +428,7 @@ void Menu::employeeMenu(int id) {
                     if(idProduct > 0 && idProduct < this->productsList.size()){
                         system("clear");
                         this->productsList.erase(this->productsList.begin()+idProduct);
+                        std::cout << "Product has been successfully removed!\n";
                     }
                     else{
                         std::cout << "No product found at that ID!\n";
@@ -485,10 +500,112 @@ std::vector<Product*> Menu::generateShoppingCart() {
     return temp;
 }
 
+void Menu::customerMenu(int id) {
+    auto* current = dynamic_cast<Customer*>(this->personsList[id]);
+    std::vector<Product*> shoppingCart;
+    float totalPrice = 0;
+    int command;
+    bool running = true;
+    system("clear");
+    while (running) {
+        std::cout << *current << '\n';
+        std::cout << "0 - Exit\n";
+        std::cout << "1 - Add product to the shopping cart\n";
+        std::cout << "2 - Remove product from the shopping cart\n";
+        std::cout << "3 - Print all products from the shopping cart\n";
+        std::cout << "4 - View product(by id)\n";
+        std::cout << "5 - View all products\n";
+        std::cout << "6 - Buy\n";
+        std::cout << "Command: ";
+        std::cin >> command;
+        switch (command) {
+            case 0: {
+                system("clear");
+                running = false;
+                break;
+            }
+            case 1: {
+                system("clear");
+                int idProduct;
+                std::cout << "Id product: ";
+                std::cin >> idProduct;
+                if(idProduct > 0 && idProduct < this->productsList.size()) {
+                    shoppingCart.push_back(this->productsList[idProduct]);
+                    totalPrice += this->productsList[idProduct]->getPrice();
+                }
+                std::cout << "Product has been added successfully!\n";
+                break;
+            }
+            case 2: {
+                system("clear");
+                if(!shoppingCart.empty()){
+                    std::cout << "Id(starting from 0): ";
+                    int idProduct;
+                    std::cin >> idProduct;
+                    if(idProduct > 0 && idProduct < shoppingCart.size()){
+                        system("clear");
+                        shoppingCart.erase(shoppingCart.begin()+idProduct);
+                        totalPrice -= shoppingCart[idProduct]->getPrice();
+                        std::cout << "Product has been successfully removed from the shopping cart!\n";
+                    }
+                    else{
+                        std::cout << "No product found in the shopping cart at that ID!\n";
+                    }
+                }else{std::cout << "No products found!\n";}
+                break;
+            }
+            case 3: {
+                system("clear");
+                if(!shoppingCart.empty()){
+                    for(auto& i: shoppingCart)
+                        std::cout << *i << '\n';
+                    std::cout << "Total price: " << ANSI_COLOR_BLUE << totalPrice << ANSI_COLOR_RESET << '\n';
+                }else{
+                    std::cout << "Shopping cart is empty!\n";
+                }
+                break;
+            }
+            case 4: {
+                system("clear");
+
+                break;
+            }
+            case 5: {
+                system("clear");
+                if(!this->productsList.empty())
+                    for(auto& i: this->productsList)
+                        std::cout << *i << "\n";
+                else std::cout << "No products found!\n";
+                break;
+            }
+            case 6: {
+                system("clear");
+                if(!shoppingCart.empty()) {
+                    for (auto &i: shoppingCart) {
+                        dynamic_cast<Customer *>(this->personsList[id])->addProduct(i);
+                    }
+                }
+                else std::cout << "No products in shopping cart!\n";
+                break;
+            }
+            default: {
+                system("clear");
+                std::cout << "Invalid command";
+                break;
+            }
+        }
+    }
+}
+
 int main(){
     Menu menu;
     menu.loadData();
     menu.run();
+//    curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <API_KEY>" -d '{"model": "image-alpha-001", "prompt": "red hoodie", "num_images": 1}' https://api.openai.com/v1/images/generations
+//    cv::Mat image = cv::imread("path/to/generated/image.jpg", cv::IMREAD_COLOR);
+//    cv::imshow("Generated Image", image);
+//    cv::waitKey(0);
+
 //    Product* p = new Pyjama();
 //    std::cout << typeid(dynamic_cast<Pyjama*>(p)).name()+2;
 }
