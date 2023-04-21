@@ -10,16 +10,23 @@
 class Employee : public Person{
     const int employeeId;
     static int employeeCount;
+
     std::string jobTitle;
 public:
     Employee(std::string name = "Unknown", int age = 0, std::string jobTitle = "Unknown");
     Employee(const Employee& obj);
     Employee& operator=(const Employee& obj);
-    std::ostream& print(std::ostream& out) const;
-    std::istream& read(std::istream& in);
+    void print(std::ostream& out) const override;
+    void read(std::istream& in) override;
     friend std::istream& operator>>(std::istream& in, Employee& obj);
     friend std::ostream& operator<<(std::ostream& out, const Employee& obj);
     ~Employee();
+
+    int getEmployeeId() const;
+
+    void setJobTitle(std::string jobTitle);
 };
+
+inline int Employee::employeeCount = 1000;
 
 #endif //CLOTHES_SHOP_EMPLOYEE_H

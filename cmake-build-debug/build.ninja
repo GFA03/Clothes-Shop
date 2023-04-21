@@ -73,6 +73,42 @@ build CMakeFiles/Clothes_Shop.dir/persons/employee.cpp.o: CXX_COMPILER__Clothes_
   OBJECT_DIR = CMakeFiles/Clothes_Shop.dir
   OBJECT_FILE_DIR = CMakeFiles/Clothes_Shop.dir/persons
 
+build CMakeFiles/Clothes_Shop.dir/shop/product.cpp.o: CXX_COMPILER__Clothes_Shop_Debug /home/gfa/CLionProjects/Clothes-Shop/shop/product.cpp || cmake_object_order_depends_target_Clothes_Shop
+  DEP_FILE = CMakeFiles/Clothes_Shop.dir/shop/product.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  OBJECT_DIR = CMakeFiles/Clothes_Shop.dir
+  OBJECT_FILE_DIR = CMakeFiles/Clothes_Shop.dir/shop
+
+build CMakeFiles/Clothes_Shop.dir/shop/shirt.cpp.o: CXX_COMPILER__Clothes_Shop_Debug /home/gfa/CLionProjects/Clothes-Shop/shop/shirt.cpp || cmake_object_order_depends_target_Clothes_Shop
+  DEP_FILE = CMakeFiles/Clothes_Shop.dir/shop/shirt.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  OBJECT_DIR = CMakeFiles/Clothes_Shop.dir
+  OBJECT_FILE_DIR = CMakeFiles/Clothes_Shop.dir/shop
+
+build CMakeFiles/Clothes_Shop.dir/shop/pants.cpp.o: CXX_COMPILER__Clothes_Shop_Debug /home/gfa/CLionProjects/Clothes-Shop/shop/pants.cpp || cmake_object_order_depends_target_Clothes_Shop
+  DEP_FILE = CMakeFiles/Clothes_Shop.dir/shop/pants.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  OBJECT_DIR = CMakeFiles/Clothes_Shop.dir
+  OBJECT_FILE_DIR = CMakeFiles/Clothes_Shop.dir/shop
+
+build CMakeFiles/Clothes_Shop.dir/shop/jacket.cpp.o: CXX_COMPILER__Clothes_Shop_Debug /home/gfa/CLionProjects/Clothes-Shop/shop/jacket.cpp || cmake_object_order_depends_target_Clothes_Shop
+  DEP_FILE = CMakeFiles/Clothes_Shop.dir/shop/jacket.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  OBJECT_DIR = CMakeFiles/Clothes_Shop.dir
+  OBJECT_FILE_DIR = CMakeFiles/Clothes_Shop.dir/shop
+
+build CMakeFiles/Clothes_Shop.dir/shop/pyjama.cpp.o: CXX_COMPILER__Clothes_Shop_Debug /home/gfa/CLionProjects/Clothes-Shop/shop/pyjama.cpp || cmake_object_order_depends_target_Clothes_Shop
+  DEP_FILE = CMakeFiles/Clothes_Shop.dir/shop/pyjama.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  OBJECT_DIR = CMakeFiles/Clothes_Shop.dir
+  OBJECT_FILE_DIR = CMakeFiles/Clothes_Shop.dir/shop
+
+build CMakeFiles/Clothes_Shop.dir/menu.cpp.o: CXX_COMPILER__Clothes_Shop_Debug /home/gfa/CLionProjects/Clothes-Shop/menu.cpp || cmake_object_order_depends_target_Clothes_Shop
+  DEP_FILE = CMakeFiles/Clothes_Shop.dir/menu.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  OBJECT_DIR = CMakeFiles/Clothes_Shop.dir
+  OBJECT_FILE_DIR = CMakeFiles/Clothes_Shop.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Clothes_Shop
@@ -81,7 +117,7 @@ build CMakeFiles/Clothes_Shop.dir/persons/employee.cpp.o: CXX_COMPILER__Clothes_
 #############################################
 # Link the executable Clothes_Shop
 
-build Clothes_Shop: CXX_EXECUTABLE_LINKER__Clothes_Shop_Debug CMakeFiles/Clothes_Shop.dir/main.cpp.o CMakeFiles/Clothes_Shop.dir/persons/person.cpp.o CMakeFiles/Clothes_Shop.dir/persons/customer.cpp.o CMakeFiles/Clothes_Shop.dir/persons/employee.cpp.o
+build Clothes_Shop: CXX_EXECUTABLE_LINKER__Clothes_Shop_Debug CMakeFiles/Clothes_Shop.dir/main.cpp.o CMakeFiles/Clothes_Shop.dir/persons/person.cpp.o CMakeFiles/Clothes_Shop.dir/persons/customer.cpp.o CMakeFiles/Clothes_Shop.dir/persons/employee.cpp.o CMakeFiles/Clothes_Shop.dir/shop/product.cpp.o CMakeFiles/Clothes_Shop.dir/shop/shirt.cpp.o CMakeFiles/Clothes_Shop.dir/shop/pants.cpp.o CMakeFiles/Clothes_Shop.dir/shop/jacket.cpp.o CMakeFiles/Clothes_Shop.dir/shop/pyjama.cpp.o CMakeFiles/Clothes_Shop.dir/menu.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/Clothes_Shop.dir
   POST_BUILD = :

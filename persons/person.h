@@ -9,27 +9,28 @@
 #include <string>
 #include <vector>
 #include <map>
-
-class IOInterface{
-public:
-    virtual std::istream& read(std::istream& in) = 0;
-    virtual std::ostream& print(std::ostream& out) const = 0;
-};
+#include "../IOInterface.h"
 
 class Person : public IOInterface{
     static int personCount;
     const int personId;
+
     std::string name;
     int age;
 public:
     Person(std::string name = "Unknown", int age = 0);
     Person(const Person& other);
     Person& operator=(const Person& other);
-    std::istream& read(std::istream& in);
-    std::ostream& print(std::ostream& out) const;
+    void read(std::istream& in);
+    void print(std::ostream& out) const;
     friend std::istream& operator>>(std::istream& in, Person& obj);
     friend std::ostream& operator<<(std::ostream& out, const Person& obj);
     virtual ~Person();
+
+    std::string getName() const;
+
+    void setName(std::string name);
+    void setAge(int age);
 };
 
 inline int Person::personCount = 10;

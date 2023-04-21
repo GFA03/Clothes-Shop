@@ -23,14 +23,14 @@ Customer& Customer::operator=(const Customer& other){
     return *this;
 }
 
-std::istream& Customer::read(std::istream& in){
+void Customer::read(std::istream& in){
     this->Person::read(in);
     std::cout << "Insert discount points: ";
     in >> this->discountPoints;
-    return in;
 }
 
-std::ostream& Customer::print(std::ostream& out) const{
+void Customer::print(std::ostream& out) const{
+    out << "Customer id: " << this->customerId << '\n';
     this->Person::print(out);
     out << "Discount points: " << this->discountPoints << std::endl;
     if(!this->purchaseHistory.empty())
@@ -40,19 +40,24 @@ std::ostream& Customer::print(std::ostream& out) const{
             out << " " << i;
         out << std::endl;
     }
-    return out;
 }
 
 std::istream& operator>>(std::istream& in, Customer& obj)
 {
-    return obj.read(in);
+    obj.read(in);
+    return in;
 }
 
 std::ostream& operator<<(std::ostream& out, const Customer& obj)
 {
-    return obj.print(out);
+    obj.print(out);
+    return out;
 }
 
 Customer::~Customer(){
     this->purchaseHistory.clear();
 }
+
+int Customer::getCustomerId() const {return this->customerId;}
+
+void Customer::setDiscountPoints(int discountPoints) {this->discountPoints = discountPoints;}

@@ -22,29 +22,36 @@ Person& Person::operator=(const Person& other){
     return *this;
 }
 
-std::istream& Person::read(std::istream& in){
+void Person::read(std::istream& in){
     std::cout << "Insert name: ";
+    in.get();
     std::getline(in, this->name);
     std::cout << "Insert age: ";
     in >> this->age;
-    return in;
 }
 
-std::ostream& Person::print(std::ostream& out) const{
+void Person::print(std::ostream& out) const{
+    out << "Id: " << this->personId << '\n';
     out << "Name: " << this->name << std::endl;
     out << "Age: " << this->age << std::endl;
-    return out;
 }
 
 
 std::istream& operator>>(std::istream& in, Person& obj){
-    return obj.read(in);
+    obj.read(in);
+    return in;
 }
 
 std::ostream& operator<<(std::ostream& out, const Person& obj){
-    return obj.print(out);
+    obj.print(out);
+    return out;
 }
 
 Person::~Person(){
     this->age = 0;
 }
+
+std::string Person::getName() const{return this->name;}
+
+void Person::setName(std::string name){this->name = name;}
+void Person::setAge(int age){this->age = age;}
