@@ -19,6 +19,8 @@
 class Menu{
     std::vector<Product*> productsList;
     std::vector<Person*> personsList;
+
+    bool loadedData = false;
 public:
     void run();
 

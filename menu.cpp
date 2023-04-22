@@ -61,7 +61,7 @@ void Menu::run(){
             case 0:{
                 system("clear");
                 running = false;
-                std::cout << "Bye! See you later!";
+                std::cout << "Bye! See you later!\n";
                 break;
             }
             case 1:{
@@ -109,7 +109,7 @@ void Menu::run(){
             }
             default:{
                 system("clear");
-                std::cout << "Invalid command";
+                std::cout << "Invalid command\n";
                 break;
             }
         }
@@ -128,6 +128,7 @@ void Menu::adminMenu() {
         std::cout << "4 - Edit Customer\n";
         std::cout << "5 - Print all Employees\n";
         std::cout << "6 - Print all Customers\n";
+        std::cout << "7 - Load default data\n";
         std::cout << "Command: ";
         std::cin >> command;
         switch(command){
@@ -185,7 +186,7 @@ void Menu::adminMenu() {
                 std::cin >> id;
                 if(id >= 0 && id < this->personsList.size() && dynamic_cast<Customer*>(this->personsList[id]) != nullptr)
                     this->editCustomerMenu(id);
-                else{std::cout << "Invalid id";}
+                else{std::cout << "Invalid id\n";}
                 break;
             }
             case 5:{
@@ -203,7 +204,7 @@ void Menu::adminMenu() {
                     }
                 }
                 if(!found){
-                    std::cout << "No employees yet!";
+                    std::cout << "No employees yet!\n";
                 }
                 break;
             }
@@ -222,13 +223,25 @@ void Menu::adminMenu() {
                     }
                 }
                 if(!found){
-                    std::cout << "No customers yet!";
+                    std::cout << "No customers yet!\n";
+                }
+                break;
+            }
+            case 7:{
+                system("clear");
+                if(!loadedData)
+                {
+                    this->loadData();
+                    loadedData = true;
+                    std::cout << "Successfully loaded data!\n";
+                }else{
+                    std::cout << "Data could not be loaded!\n";
                 }
                 break;
             }
             default:{
                 system("clear");
-                std::cout << "Invalid command";
+                std::cout << "Invalid command\n";
                 break;
             }
         }
@@ -287,7 +300,7 @@ void Menu::editEmployeeMenu(int id) {
             }
             default:{
                 system("clear");
-                std::cout << "Invalid command";
+                std::cout << "Invalid command\n";
                 break;
             }
         }
@@ -346,7 +359,7 @@ void Menu::editCustomerMenu(int id) {
             }
             default:{
                 system("clear");
-                std::cout << "Invalid command";
+                std::cout << "Invalid command\n";
                 break;
             }
         }
@@ -444,7 +457,7 @@ void Menu::employeeMenu(int id) {
                         std::cout << *i << '\n';
                     }
                 }else{
-                    std::cout << "No products found!";
+                    std::cout << "No products found!\n";
                 }
                 break;
             }
@@ -477,7 +490,7 @@ void Menu::employeeMenu(int id) {
             }
             default: {
                 system("clear");
-                std::cout << "Invalid command";
+                std::cout << "Invalid command\n";
                 break;
             }
         }
@@ -590,7 +603,7 @@ void Menu::customerMenu(int id) {
             }
             default: {
                 system("clear");
-                std::cout << "Invalid command";
+                std::cout << "Invalid command\n";
                 break;
             }
         }
@@ -599,7 +612,6 @@ void Menu::customerMenu(int id) {
 
 int main(){
     Menu menu;
-    menu.loadData();
     menu.run();
 //    curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <API_KEY>" -d '{"model": "image-alpha-001", "prompt": "red hoodie", "num_images": 1}' https://api.openai.com/v1/images/generations
 //    cv::Mat image = cv::imread("path/to/generated/image.jpg", cv::IMREAD_COLOR);
