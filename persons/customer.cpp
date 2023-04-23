@@ -60,6 +60,10 @@ Customer::~Customer(){
 
 int Customer::getCustomerId() const {return this->customerId;}
 
+float Customer::getDiscountPoints() {
+    return this->discountPoints;
+}
+
 void Customer::setDiscountPoints(int discountPoints) {this->discountPoints = discountPoints;}
 
 void Customer::addProduct(Product* product) {

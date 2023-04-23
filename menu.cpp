@@ -72,11 +72,13 @@ void Menu::run(){
             case 2:{
                 system("clear");
                 bool found = false;
+                std::unordered_map<int, bool> idEmployees;
                 Employee* temp;
                 for(int i = 0; i < this->personsList.size(); ++i){
                     temp = dynamic_cast<Employee*>(this->personsList[i]);
                     if(temp != nullptr){
                         std::cout << temp->getName() << '(' << temp->getEmployeeId() << ')' << " -> " << i << '\n';
+                        idEmployees[i] = true;
                         found = true;
                     }
                 }
@@ -84,32 +86,42 @@ void Menu::run(){
                     int id;
                     std::cout << "Id: ";
                     std::cin >> id;
-                    this->employeeMenu(id);
+                    if(idEmployees[id])
+                        this->employeeMenu(id);
+                    else{
+                        std::cout << "Invalid id!\n";
+                    }
                 }else{std::cout << "No employees found!\n";}
                 break;
             }
             case 3:{
                 system("clear");
                 bool found = false;
+                std::unordered_map<int, bool> idCustomers;
                 Customer* temp;
                 for(int i = 0; i < this->personsList.size(); ++i){
                     temp = dynamic_cast<Customer*>(this->personsList[i]);
                     if(temp != nullptr){
                         std::cout << temp->getName() << '(' << temp->getCustomerId() << ')' << " -> " << i << '\n';
                         found = true;
+                        idCustomers[i] = true;
                     }
                 }
                 if(found) {
                     int id;
                     std::cout << "Id: ";
                     std::cin >> id;
-                    this->customerMenu(id);
-                }else{std::cout << "No employees found!\n";}
+                    if(idCustomers[id])
+                        this->customerMenu(id);
+                    else{
+                        std::cout << "Invalid id!\n";
+                    }
+                }else{std::cout << "No customers found!\n";}
                 break;
             }
             default:{
                 system("clear");
-                std::cout << "Invalid command\n";
+                std::cout << "Invalid command!\n";
                 break;
             }
         }
@@ -168,7 +180,7 @@ void Menu::adminMenu() {
                 std::cin >> id;
                 if(id >= 0 && id < this->personsList.size() && dynamic_cast<Employee*>(this->personsList[id]) != nullptr)
                     this->editEmployeeMenu(id);
-                else{std::cout << "Invalid id\n";}
+                else{std::cout << "Invalid id!\n";}
                 break;
             }
             case 4:{
@@ -186,7 +198,7 @@ void Menu::adminMenu() {
                 std::cin >> id;
                 if(id >= 0 && id < this->personsList.size() && dynamic_cast<Customer*>(this->personsList[id]) != nullptr)
                     this->editCustomerMenu(id);
-                else{std::cout << "Invalid id\n";}
+                else{std::cout << "Invalid id!\n";}
                 break;
             }
             case 5:{
@@ -241,7 +253,7 @@ void Menu::adminMenu() {
             }
             default:{
                 system("clear");
-                std::cout << "Invalid command\n";
+                std::cout << "Invalid command!\n";
                 break;
             }
         }
@@ -300,7 +312,7 @@ void Menu::editEmployeeMenu(int id) {
             }
             default:{
                 system("clear");
-                std::cout << "Invalid command\n";
+                std::cout << "Invalid command!\n";
                 break;
             }
         }
@@ -359,10 +371,22 @@ void Menu::editCustomerMenu(int id) {
             }
             default:{
                 system("clear");
-                std::cout << "Invalid command\n";
+                std::cout << "Invalid command!\n";
                 break;
             }
         }
+    }
+}
+
+void compareWords(std::string userInput, std::string barCode){
+    if(userInput != barCode){
+        for(int i = 0; i < userInput.size(); ++i){
+            if(userInput[i] == barCode[i])
+                std::cout << ANSI_COLOR_GREEN << userInput[i] << ANSI_COLOR_RESET;
+            else
+                std::cout << ANSI_COLOR_RED << userInput[i] << ANSI_COLOR_RESET;
+        }
+        std::cout << '\n';
     }
 }
 
@@ -451,10 +475,12 @@ void Menu::employeeMenu(int id) {
             }
             case 3: {
                 system("clear");
+                int cnt = 0;
                 if(!this->productsList.empty())
                 {
                     for(auto& i: this->productsList){
-                        std::cout << *i << '\n';
+                        std::cout << *i;
+                        std::cout << "For remove -> " << cnt++ << "\n\n";
                     }
                 }else{
                     std::cout << "No products found!\n";
@@ -469,15 +495,20 @@ void Menu::employeeMenu(int id) {
                     bool continueWork = true;
                     while(continueWork){
                         temp = generateShoppingCart();
+                        auto start = std::chrono::high_resolution_clock::now();
                         for(int i = 0; i < temp.size(); ++i){
                             std::cout << temp[i]->getBarCode() << '\n';
                             while(barCode != temp[i]->getBarCode()) {
                                 std::cout << "Insert bar code: ";
                                 std::cin >> barCode;
+                                compareWords(barCode, temp[i]->getBarCode());
                             }
                         }
+                        auto stop = std::chrono::high_resolution_clock::now();
+                        auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop-start);
                         system("clear");
-                        std::cout << "You did an " << ANSI_COLOR_RED << "EXCELLENT JOB!" << ANSI_COLOR_RESET << "\n" << "Would you like to continue?\n";
+                        std::cout << "You managed to scan the products in " << ANSI_COLOR_CYAN << duration << ANSI_COLOR_RESET << " seconds!\n";
+                        std::cout << "You did an " << ANSI_COLOR_RED << "EXCELLENT JOB" << ANSI_COLOR_RESET << "!\n" << "Would you like to continue?\n";
                         std::cout << "Stop work -> 0\n";
                         std::cout << "Continue work -> 1\n";
                         std::cout << "Command: ";
@@ -490,12 +521,13 @@ void Menu::employeeMenu(int id) {
             }
             default: {
                 system("clear");
-                std::cout << "Invalid command\n";
+                std::cout << "Invalid command!\n";
                 break;
             }
         }
     }
 }
+
 
 std::vector<Product*> Menu::generateShoppingCart() {
     std::random_device rd;
@@ -521,14 +553,13 @@ void Menu::customerMenu(int id) {
     bool running = true;
     system("clear");
     while (running) {
-        std::cout << *current << '\n';
+        std::cout << *current;
         std::cout << "0 - Exit\n";
         std::cout << "1 - Add product to the shopping cart\n";
         std::cout << "2 - Remove product from the shopping cart\n";
         std::cout << "3 - Print all products from the shopping cart\n";
-        std::cout << "4 - View product(by id)\n";
-        std::cout << "5 - View all products\n";
-        std::cout << "6 - Buy\n";
+        std::cout << "4 - View all products\n";
+        std::cout << "5 - Buy\n";
         std::cout << "Command: ";
         std::cin >> command;
         switch (command) {
@@ -545,8 +576,10 @@ void Menu::customerMenu(int id) {
                 if(idProduct > 0 && idProduct < this->productsList.size()) {
                     shoppingCart.push_back(this->productsList[idProduct]);
                     totalPrice += this->productsList[idProduct]->getPrice();
+                    std::cout << "Product has been added successfully!\n";
+                }else{
+                    std::cout << "Product not found!\n";
                 }
-                std::cout << "Product has been added successfully!\n";
                 break;
             }
             case 2: {
@@ -569,10 +602,16 @@ void Menu::customerMenu(int id) {
             }
             case 3: {
                 system("clear");
+                int cnt = 0;
                 if(!shoppingCart.empty()){
-                    for(auto& i: shoppingCart)
-                        std::cout << *i << '\n';
+                    for(auto& i: shoppingCart) {
+                        std::cout << *i;
+                        std::cout << "To remove from the cart -> " << cnt++ << '\n';
+                        std::cout << '\n';
+                    }
                     std::cout << "Total price: " << ANSI_COLOR_BLUE << totalPrice << ANSI_COLOR_RESET << '\n';
+                    std::max((float)0, totalPrice - current->getDiscountPoints());
+                    std::cout << "Total price with discount points: " << ANSI_COLOR_BLUE << std::max((float)0, totalPrice - current->getDiscountPoints()) << ANSI_COLOR_RESET << '\n';
                 }else{
                     std::cout << "Shopping cart is empty!\n";
                 }
@@ -580,30 +619,32 @@ void Menu::customerMenu(int id) {
             }
             case 4: {
                 system("clear");
-
-                break;
-            }
-            case 5: {
-                system("clear");
+                int cnt = 0;
                 if(!this->productsList.empty())
-                    for(auto& i: this->productsList)
-                        std::cout << *i << "\n";
+                    for(auto& i: this->productsList){
+                        std::cout << *i;
+                        std::cout << "To add in the shopping cart -> " << cnt++ << '\n';
+                        std::cout << '\n';
+                    }
                 else std::cout << "No products found!\n";
                 break;
             }
-            case 6: {
+            case 5: {
                 system("clear");
                 if(!shoppingCart.empty()) {
                     for (auto &i: shoppingCart) {
                         dynamic_cast<Customer *>(this->personsList[id])->addProduct(i);
                     }
+                    current->setDiscountPoints(std::max((float)0, current->getDiscountPoints()-totalPrice));
+                    current->setDiscountPoints(current->getDiscountPoints() + (float)(totalPrice / 10.0));
+                    running = false;
                 }
                 else std::cout << "No products in shopping cart!\n";
                 break;
             }
             default: {
                 system("clear");
-                std::cout << "Invalid command\n";
+                std::cout << "Invalid command!\n";
                 break;
             }
         }
@@ -613,11 +654,4 @@ void Menu::customerMenu(int id) {
 int main(){
     Menu menu;
     menu.run();
-//    curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <API_KEY>" -d '{"model": "image-alpha-001", "prompt": "red hoodie", "num_images": 1}' https://api.openai.com/v1/images/generations
-//    cv::Mat image = cv::imread("path/to/generated/image.jpg", cv::IMREAD_COLOR);
-//    cv::imshow("Generated Image", image);
-//    cv::waitKey(0);
-
-//    Product* p = new Pyjama();
-//    std::cout << typeid(dynamic_cast<Pyjama*>(p)).name()+2;
 }

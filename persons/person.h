@@ -31,6 +31,7 @@ public:
 
     void setName(std::string name);
     void setAge(int age);
+
 };
 
 inline int Person::personCount = 10;

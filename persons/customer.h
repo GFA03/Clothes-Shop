@@ -30,6 +30,8 @@ public:
 
     int getCustomerId() const;
 
+    float getDiscountPoints();
+
     void setDiscountPoints(int discountPoints);
     void addProduct(Product* product);
 };
